@@ -1,6 +1,7 @@
 ﻿using PatientManager.Business.Interfaces;
 using PatientManager.Domain.Dto;
 using PatientManager.Domain.Entity;
+using PatientManager.Infra.Framework.Security;
 using PatientManager.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,12 @@ namespace PatientManager.Business
         {
             patientRepository.AddPatient(new Patient
             {
-                Email = patient.Email,
-                FirstName = patient.FirstName,
-                Gender = patient.Gender,
-                LastName = patient.LastName,
-                Notes = patient.Notes,
-                Phone = patient.Phone
+                Email = HashHelper.Encrypt(patient.Email),
+                FirstName = HashHelper.Encrypt(patient.FirstName),
+                Gender = HashHelper.Encrypt(patient.Gender),
+                LastName = HashHelper.Encrypt(patient.LastName),
+                Notes = HashHelper.Encrypt(patient.Notes),
+                Phone = HashHelper.Encrypt(patient.Phone)
             });
         }
 
@@ -45,12 +46,12 @@ namespace PatientManager.Business
             patientRepository.EditPatient(new Patient
             {
                 Id = patient.Id,
-                Email = patient.Email,
-                FirstName = patient.FirstName,
-                Gender = patient.Gender,
-                LastName = patient.LastName,
-                Notes = patient.Notes,
-                Phone = patient.Phone
+                Email = HashHelper.Encrypt(patient.Email),
+                FirstName = HashHelper.Encrypt(patient.FirstName),
+                Gender = HashHelper.Encrypt(patient.Gender),
+                LastName = HashHelper.Encrypt(patient.LastName),
+                Notes = HashHelper.Encrypt(patient.Notes),
+                Phone = HashHelper.Encrypt(patient.Phone)
             });
         }
 
@@ -59,12 +60,12 @@ namespace PatientManager.Business
             return patientRepository.GetAllPatients().Select(x => new PatientDto
             {
                 Id = x.Id,
-                Email = x.Email,
-                FirstName = x.FirstName,
-                Gender = x.Gender,
-                LastName = x.LastName,
-                Notes = x.Notes,
-                Phone = x.Phone
+                Email = HashHelper.Decrypt(x.Email),
+                FirstName = HashHelper.Decrypt(x.FirstName),
+                Gender = HashHelper.Decrypt(x.Gender),
+                LastName = HashHelper.Decrypt(x.LastName),
+                Notes = HashHelper.Decrypt(x.Notes),
+                Phone = HashHelper.Decrypt(x.Phone)
             });
         }
 
@@ -75,12 +76,12 @@ namespace PatientManager.Business
             return new PatientDto
             {
                 Id = patientDto.Id,
-                Email = patientDto.Email,
-                FirstName = patientDto.FirstName,
-                Gender = patientDto.Gender,
-                LastName = patientDto.LastName,
-                Notes = patientDto.Notes,
-                Phone = patientDto.Phone
+                Email = HashHelper.Decrypt(patientDto.Email),
+                FirstName = HashHelper.Decrypt(patientDto.FirstName),
+                Gender = HashHelper.Decrypt(patientDto.Gender),
+                LastName = HashHelper.Decrypt(patientDto.LastName),
+                Notes = HashHelper.Decrypt(patientDto.Notes),
+                Phone = HashHelper.Decrypt(patientDto.Phone)
             };
         }
     }
