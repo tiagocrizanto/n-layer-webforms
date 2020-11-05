@@ -23,6 +23,7 @@ namespace PatientManager.Repository
             x.Add(new XAttribute("gender", patient.Gender));
             x.Add(new XAttribute("email", patient.Email));
             x.Add(new XAttribute("notes", patient.Notes));
+            x.Add(new XAttribute("isDeleted", "false"));
             XElement xml = XElement.Load(filePath);
             xml.Add(x);
             xml.Save(filePath);
@@ -30,11 +31,22 @@ namespace PatientManager.Repository
 
         public void DeletePatientById(long id)
         {
+            // code to delete register
+
+            //XElement xml = XElement.Load(filePath);
+            //XElement x = xml.Elements().Where(p => p.Attribute("id").Value.Equals(id.ToString())).First();
+            //if (x != null)
+            //{
+            //    x.Remove();
+            //}
+            //xml.Save(filePath);
+
+            // keep the record and set flag as deleted
             XElement xml = XElement.Load(filePath);
-            XElement x = xml.Elements().Where(p => p.Attribute("id").Value.Equals(id.ToString())).First();
+            XElement x = xml.Elements().Where(p => p.Attribute("id").Value.Equals(id.ToString())).FirstOrDefault();
             if (x != null)
             {
-                x.Remove();
+                x.Attribute("isDeleted").SetValue("true");
             }
             xml.Save(filePath);
         }
@@ -69,12 +81,13 @@ namespace PatientManager.Repository
                     Gender = x.Attribute("gender").Value,
                     LastName = x.Attribute("lastName").Value,
                     Notes = x.Attribute("notes").Value,
-                    Phone = x.Attribute("phone").Value
+                    Phone = x.Attribute("phone").Value,
+                    IsDeleted = bool.Parse(x.Attribute("isDeleted").Value)
                 };
                 patients.Add(p);
             }
 
-            return patients;
+            return patients.Where(x => !x.IsDeleted);
         }
 
         public Patient GetPatientById(long id)

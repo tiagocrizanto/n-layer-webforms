@@ -32,6 +32,7 @@ namespace PatientManager.Web.Pages
                 });
 
                 txtEmail.Text = "";
+                txtConfirmEmail.Text = "";
                 txtFirstName.Text = "";
                 ddlGender.SelectedValue = "";
                 txtLastName.Text = "";
