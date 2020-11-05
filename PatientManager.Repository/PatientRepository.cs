@@ -41,12 +41,15 @@ namespace PatientManager.Repository
             //}
             //xml.Save(filePath);
 
-            // keep the record and set flag as deleted
+            // keep the record and set flag as deleted - Linq to SQL example
             XElement xml = XElement.Load(filePath);
-            XElement x = xml.Elements().Where(p => p.Attribute("id").Value.Equals(id.ToString())).FirstOrDefault();
-            if (x != null)
+            var patient = (from p in xml.Elements()
+                          where (long) p.Attribute("id") == id
+                          select p).FirstOrDefault();
+
+            if (patient != null)
             {
-                x.Attribute("isDeleted").SetValue("true");
+                patient.Attribute("isDeleted").SetValue("true");
             }
             xml.Save(filePath);
         }
@@ -54,7 +57,7 @@ namespace PatientManager.Repository
         public void EditPatient(Patient patient)
         {
             XElement xml = XElement.Load(filePath);
-            XElement x = xml.Elements().Where(p => p.Attribute("id").Value.Equals(patient.Id.ToString())).FirstOrDefault();
+            XElement x = xml.Elements().FirstOrDefault(p => p.Attribute("id").Value.Equals(patient.Id.ToString()));
             if (x != null)
             {
                 x.Attribute("email").SetValue(patient.Email);
@@ -93,7 +96,7 @@ namespace PatientManager.Repository
         public Patient GetPatientById(long id)
         {
             XElement xml = XElement.Load(filePath);
-            XElement patient = xml.Elements().Where(p => p.Attribute("id").Value.Equals(id.ToString())).FirstOrDefault();
+            XElement patient = xml.Elements().FirstOrDefault(p => p.Attribute("id").Value.Equals(id.ToString()));
 
             if(patient != null)
             {
