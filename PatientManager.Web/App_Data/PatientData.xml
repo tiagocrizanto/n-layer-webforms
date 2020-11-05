@@ -1,6 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <patients>
-  <patient id="1" firstName="asd" lastName="asd" phone="asd" gender="F" email="asd@asd.com" notes="asd" />
-  <patient id="2" firstName="asdf" lastName="asdf" phone="asdf" gender="F" email="asdf@asdf.com" notes="asdf@asdf.com" />
-  <patient id="3" firstName="asdfasdf" lastName="asdfasdf" phone="asdfasdf" gender="M" email="asdfs@adsfas.com" notes="asdfs@adsfas.com" />
+  <patient id="1" firstName="Tiago" lastName="Crizanto" phone="+55 31 9 88989349" gender="M" email="tiagocrizanto@gmail.com" notes="Hello notes =)" />
 </patients>
